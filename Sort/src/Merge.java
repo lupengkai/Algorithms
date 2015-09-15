@@ -48,7 +48,7 @@ public class Merge {
         int j = hi;
         for (int k = lo; k <= hi; k++) {
             if (less(aux[i], aux[j])) a[k] = aux[i++];
-            else a[k] = aux[j--]
+            else a[k] = aux[j--];
         }
 
     }
