@@ -35,6 +35,25 @@ public class Merge {
         }
     }
 
+    public static void fasterMerge(Comparable[] a, int lo, int mid, int hi) {
+        for (int i = lo; i <= mid; i++) {
+            aux[i] = a[i];
+        }
+
+        for (int j = mid + 1; j <= hi; j++) {
+            aux[j] = a[hi - j + mid + 1];
+        }
+
+        int i = lo;
+        int j = hi;
+        for (int k = lo; k <= hi; k++) {
+            if (less(aux[i], aux[j])) a[k] = aux[i++];
+            else a[k] = aux[j--]
+        }
+
+    }
+
+
     private static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
     }
