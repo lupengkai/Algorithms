@@ -2,36 +2,28 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 /**
- * Created by tage on 15-9-17.
+ * Created by tage on 15-9-20.
  */
-public class Quick {
+public class Quick3way {
     public static void sort(Comparable[] a) {
         StdRandom.shuffle(a);//消除对输入的依赖
         sort(a, 0, a.length - 1);
     }
 
+    /*    从左到右遍历数组,维护一个指正lt使得a[lo...lt-1]中的元素都小于v,一个指针gt使得a[gt+1...hi]中的元素都大于v, 一个指针i使得a[lt...i-1]中的元素都等于v,
+        a[i...gt]中的元素还未确定.*/
     private static void sort(Comparable[] a, int lo, int hi) {
         if (hi <= lo) return;
-        int j = partition(a, lo, hi);
-        sort(a, lo, j - 1);
-        sort(a, j + 1, hi);
-    } /*按照a[lo]的值v进行切分.
-    当指针i和j相遇时主循环退出.
-    在循环中,a[i]小于v时增加i,a[j]大于v时减小j,
-    然后交换a[i]和a[j]来保证i左侧的元素都不大于v,右侧元素都不小于v
-    当两指针相遇时交换a[lo]和a[j]*/
-
-    private static int partition(Comparable[] a, int lo, int hi) {
-        int i = lo, j = hi + 1;
+        int lt = lo, i = lo + 1, gt = hi;
         Comparable v = a[lo];
-        while (true) {
-            while (less(a[++i], v)) if (i == hi) break;
-            while (less(v, a[--j])) if (j == lo) break;
-            if (i >= j) break;
-            exch(a, i, j);
+        while (i <= gt) {
+            int cmp = a[i].compareTo(v);
+            if (cmp < 0) exch(a, lt++, i++);
+            else if (cmp > 0) exch(a, i, gt--);
+            else i++;
         }
-        exch(a, lo, j);
-        return j;
+        sort(a, lo, lt - 1);
+        sort(a, gt + 1, hi);
     }
 
     private static boolean less(Comparable v, Comparable w) {
@@ -66,4 +58,5 @@ public class Quick {
         assert isSorted(a);
         show(a);
     }
+
 }

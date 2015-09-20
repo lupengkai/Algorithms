@@ -35,6 +35,8 @@ public class Merge {
         }
     }
 
+    /*按降序将a[]后半部分复制到aux[].然后将其归并到a[]中,这样可以去掉内循环中检测某半边是否用尽的代码*/
+
     public static void fasterMerge(Comparable[] a, int lo, int mid, int hi) {
         for (int i = lo; i <= mid; i++) {
             aux[i] = a[i];
